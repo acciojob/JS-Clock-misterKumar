@@ -1,26 +1,29 @@
-function rotateClockHands() {
-  const hourHand = document.querySelector('.hour-hand');
-  const minuteHand = document.querySelector('.min-hand');
-  const secondHand = document.querySelector('.second-hand');
+const secondHand = document.querySelector('.second-hand');
+const minsHand = document.querySelector('.min-hand');
+const hourHand = document.querySelector('.hour-hand');
 
-  const now = new Date();
-  const seconds = now.getSeconds();
-  const minutes = now.getMinutes();
-  const hours = now.getHours() % 12; // Convert to 12-hour format
+function setDate() {
+    const now = new Date();
+    
 
-  // Calculate rotation angles for clock hands
-  const secondAngle = (seconds / 60) * 360;
-  const minuteAngle = ((minutes + seconds / 60) / 60) * 360;
-  const hourAngle = ((hours + minutes / 60) / 12) * 360;
+    const seconds = now.getSeconds();
+    const mins = now.getMinutes();
+    const hour = now.getHours();
 
-  // Apply rotation transforms to the clock hands
-  secondHand.style.transform = `rotate(${secondAngle}deg)`;
-  minuteHand.style.transform = `rotate(${minuteAngle}deg)`;
-  hourHand.style.transform = `rotate(${hourAngle}deg)`;
+    console.log("curr", now, seconds, mins, hour)
+
+    const hourDegrees = (30*hour + mins/2);
+    const minsDegrees = 6*mins;
+    const secondsDegrees = 6*seconds;
+
+
+    console.log('degres', hourDegrees, minsDegrees, secondsDegrees)
+    
+    secondHand.style.transform = `rotate(${secondsDegrees }deg)`;
+    minsHand.style.transform = `rotate(${minsDegrees + 90}deg)`;
+    hourHand.style.transform = `rotate(${hourDegrees +90 }deg)`;
+
+	// hourHand.style.transform = `rotate(${Math.round(hourDegrees) + 90}deg)`;
 }
 
-// Update clock hands every second
-setInterval(rotateClockHands, 1000);
-
-// Call the function once to set the initial clock position
-rotateClockHands();
+setInterval(setDate, 1000);
